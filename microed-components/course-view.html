@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="import" href="../external-components/iron-ajax/iron-ajax.html">
+ <link rel="import" href="../external-components/paper-card/paper-card.html">
+ <link rel="import" href="../external-components/paper-progress/paper-progress.html">
+ <link rel="import" href="swipeable-card.html">
+</head>
+
+<dom-module id="course-view">
+<template>
+  <style>
+    :host{
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    li:nth-child(3) {
+      top: -4px; transform: translate(0px, -8px);
+    }
+
+    li:nth-child(2) {
+      top: 0px; transform: translate(0px, -4px);
+    }
+
+    li:nth-child(1) {
+      top: 4px; transform: translate(0px, 0px);
+    }
+
+  </style>
+
+
+  <iron-ajax
+    id="ajax-course-fetcher"
+    handle-as="json"
+    last-response="{{course}}">
+  </iron-ajax>
+
+<div class="card-content">
+  <ul>
+    <template id="course" is="dom-repeat" items="{{course.cards}}">
+      <li id="card-li">
+        <swipeable-card heading="[[item.name]]">
+        <div class="card-content">
+          <p>[[item.text]]</p>
+        </div>
+      </swipeable-card>
+    </li>
+  </template>
+</ul>
+</div>
+
+</template>
+
+<script>
+  Polymer({
+    is: "course-view",
+    properties: {
+      courseId: {
+        type: String,
+        value: '',
+        observer: 'fetchCourses'
+      }
+    },
+
+    fetchCourses: function()
+    {
+      if(this.courseId != ''){
+        document.getElementById("ajax-course-fetcher").url = 'http://api.microed.org/v1/courses/'+this.courseId;
+        document.getElementById("ajax-course-fetcher").generateRequest();
+      }
+    },
+
+  });
+</script>
+
+</dom-module>
+
+</html>

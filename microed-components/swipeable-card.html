@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="import" href="../external-components/polymer/polymer.html">
+  <link rel="import" href="../external-components/paper-card/paper-card.html">
+</head>
+<dom-module id="swipeable-card">
+<template>
+  <style>
+    :host {
+      position: absolute;
+      transition-property: opacity, transform;
+    }
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+      :host {
+        left: 50%;
+        transform-origin: 50% 100%;
+        margin-left: -150px;
+      }
+
+      paper-card{
+        width:300px;
+        height: 300px;
+      }
+    }
+
+    @media only screen and (min-device-width : 768px) and (max-device-width : 5120px) {
+      :host {
+        left: 50%;
+        transform-origin: 50% 100%;
+        margin-left: -300px;
+      }
+
+      paper-card{
+        width:600px;
+        height: 300px;
+      }
+    }
+
+    :host.to-left {
+      transition-property: transform,opacity;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transform: translate(-30rem) rotate(-30deg);
+      opacity: 0;
+    }
+
+    :host.to-right {
+      transition-property: transform,opacity;
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transform: translate(30rem) rotate(30deg);
+      opacity: 0;
+    }
+
+    :host.reset {
+      transition: transform 0.3s;
+      transform: translate(0,0,0);
+    }
+  </style>
+  <paper-card heading="{{heading}}">
+  <content></content>
+  </paper-card>
+</template>
+
+<script>
+  Polymer({
+    is: "swipeable-card",
+    properties: {
+      heading: String,
+
+      disableSwipe: {
+        type: Boolean,
+        value: false
+      },
+      decisionVal: {
+        type: Number,
+        value: 100
+      },
+      swiped: {
+        type: Boolean,
+        value: false
+      },
+    },
+    listeners: {
+      'track': 'trackUpdate',
+    },
+
+    animate: function(e) {
+      this.pullDeltaX = (e.x - this.startX);
+      this.pullDeltaY = (e.y - this.startY);
+
+      if(!e.dx && !e.dy) return;
+      var s = this.style;
+      deg = this.pullDeltaX / 10;
+
+      var translate = 'translate3d(' + e.dx + 'px,' + 0 + 'px,0)' + 'rotate(' + deg + 'deg)';
+      s.transform = s.webkitTransform = translate;
+    },
+
+    trackUpdate: function(e) {
+      e.preventDefault();
+     switch(e.detail.state) {
+      case 'start':
+      if (!this.disableSwipe) {
+        this.trackStart(e.detail);
+      }
+      break;
+      case 'track':
+      if (!this.disableSwipe) {
+        this.animate(e.detail);
+      }
+      break;
+      case 'end':
+      if (!this.disableSwipe) {
+        this.trackEnd(e.detail);
+      }
+      break;
+    }
+  },
+
+  trackStart: function(e) {
+    this.startX =  e.x;
+  },
+
+  trackEnd: function(e) {
+    if(!e.dx && !e.dy) return;
+    this.removeAttribute("style");
+
+    if (Math.abs(this.pullDeltaX) > this.decisionVal) {
+      if (this.pullDeltaX >= this.decisionVal) {
+        this.classList.add("to-right");
+      } else if (this.pullDeltaX <= -this.decisionVal) {
+        this.classList.add("to-left");
+      }
+
+      setTimeout(function(e) {
+          e.classList.remove("inactive");
+          e.classList.remove("to-left");
+          e.classList.remove("to-right");
+          // e.fire('swipeable-card-swipe-away');
+          e.swiped = true;
+          e.parentNode.removeChild(e);
+      }, 300,this);
+    }else{
+      this.classList.add("reset");
+      setTimeout(function(e) {
+        e.classList.remove("reset");
+        e.pullDeltaX = 0;
+      }, 300,this);
+    }
+},
+
+});
+</script>
+</dom-module>

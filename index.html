@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" type="text/css" href="microed-components/microed.css">
+  <link rel="stylesheet" type="text/css" href="microed-components/login.css">
+  <link rel="import" href="import.html">
+  <script src="//cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
+  <script src="microed-app.js"></script>
+  <script src="//cdn.auth0.com/js/lock-7.9.min.js"></script>
+  <script type="text/javascript" src="auth0-variables.js"></script>
+  <script src="external-components/webcomponentsjs/webcomponents-lite.js"></script>
+
+</head>
+<style is="custom-style">
+  paper-toolbar {
+    @apply(--shadow-elevation-4dp);
+    background: #4285f4;
+  }
+
+  search {
+    width: 200px;
+  }
+</style>
+
+<title>Microed</title>
+
+<body fullbleed unresolved>
+  <paper-scroll-header-panel fixed="true">
+  <paper-toolbar>
+  <paper-icon-button id="backButton" icon="arrow-back" onclick="page('/')"></paper-icon-button>
+  <div class="title" style="margin-left:8px;">Microed</div>
+  <paper-icon-button suffix icon="search"></paper-icon-button>
+  <x-login></x-login>
+  <paper-progress id="course-progress" class="bottom fit" value="10"></paper-progress>
+</paper-toolbar>
+
+<iron-pages id="pager" style="margin: 0 5%">
+
+<div><feed-view id="feed-view"></feed-view></div>
+<div><course-view id="course-view"></course-view></div>
+<div><profile-view id="profile-view"></profile-view></div>
+
+</iron-pages>
+</paper-scroll-header-panel>
+
+<div>
+  <paper-toast id="notification" text="Sometheing went wrong"></paper-toast>
+</div>
+</body>
+  <script type="text/javascript">app.init();</script>
+</html>

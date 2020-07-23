@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="import" href="../external-components/gold-email-input/gold-email-input.html">
+  <link rel="import" href="../external-components/iron-form/iron-form.html">
+</head>
+<dom-module id="subscribe-card">
+<template>
+  <style>
+   paper-card{
+      text-align: left;
+      width: 100%;
+      max-width: 500px;
+      margin-bottom: 16px;
+   }
+
+   paper-button.submit-button {
+    float: right;
+    background: #4285f4;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+</style>
+<paper-card heading="Get notified">
+  <div class="card-content">
+    <form is="iron-form" id="formPost" method="post" content-type="application/json" action="http://api.microed.org/v1/emails">
+      <gold-email-input class="email-input" name="email" label="E-Mail" auto-validate required value="username@mail.com"></gold-email-input>
+      <paper-button class="submit-button" on-click="callback" tabindex="0" raised>Subscribe</paper-button>
+    </form>
+  </div>
+</paper-card>
+</template>
+
+<script>
+  Polymer({
+    is: "subscribe-card",
+    properties: {
+      disableSwipe: {
+        type: Boolean,
+        value: false
+      },
+      decisionVal: {
+        type: Number,
+        value: 100
+      },
+      swiped: {
+        type: Boolean,
+        value: false
+      },
+    },
+    listeners: {
+      'iron-form-submit': 'submitCallback',
+      'iron-form-response': 'responseListener'
+    },
+
+    callback: function (event, detail, sender) {
+      Polymer.dom(event).localTarget.parentElement.submit();
+    },
+
+    submitCallback: function (event){
+      document.querySelector('#notification').text = "Subscribing";
+      document.querySelector('#notification').show()
+    },
+
+    responseListener:function (event){
+      if( event.detail.status == 200){
+        document.querySelector('#notification').text = "Success!";
+        document.querySelector('#notification').show();
+      }else{
+        document.querySelector('#notification').show();
+      }
+    }
+
+  });
+</script>
+</dom-module>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="import" href="../external-components/iron-ajax/iron-ajax.html">
+ <link rel="import" href="../external-components/paper-card/paper-card.html">
+ <link rel="import" href="../external-components/paper-progress/paper-progress.html">
+</head>
+
+<dom-module id="course-card">
+<template>
+  <style>
+    paper-card {
+      text-align: left;
+      width: 100%;
+      min-height: 300px;
+      max-width: 500px;
+      margin-bottom: 16px;
+
+      --paper-card-header-image:{
+        max-height:150px;
+        object-fit: cover;
+      }
+
+      --paper-card-content:{
+        margin-bottom: 32px;
+      }
+
+      --paper-card-actions:{
+        position:absolute;
+        bottom: 0px;
+        width:100%;
+        padding: 8px 0px;
+      }
+    }
+
+    a {
+        text-decoration: none;
+        color: #3498db;
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    a:hover {
+      color: #2980b9;
+    }
+
+    paper-fab.start-course-button{
+      position: absolute;
+      bottom: -8px;
+      right: 16px;
+    }
+
+
+  </style>
+
+  <iron-ajax id="fetcher" handle-as="json" last-response="{{course}}"></iron-ajax>
+  <paper-card id="card" image="[[course.image]]">
+  <div class="card-content">
+    <a href="tags/[[course.tags.0]]">[[course.tags.0]]</a>
+    <h2>[[course.name]]</h2>
+    <p>[[course.description]]</p>
+  </div>
+   <div class="card-actions">
+    <span style="padding-left: 16px;"><iron-icon icon="query-builder"/></iron-icon></span><span>[[course.estimate]]</span><span> min - <a href="account/[[course.account_id]]">[[course.account_name]]</a></span>
+     <paper-fab class="start-course-button" icon="arrow-forward" title="arrow-forward" on-click="requestCourse"></paper-fab>
+  </div>
+</paper-card>
+
+</template>
+
+<script>
+  Polymer({
+    is: "course-card",
+    properties: {
+      courseid: String,
+    },
+
+    attached: function()
+    {
+      var fetcher = document.getElementById('fetcher');
+      fetcher.url = 'http://api.microed.org/v1/courses/'+this.courseid+"?fields=id,tags,description,account_id,name,estimate,account_name";
+      fetcher.generateRequest();
+    },
+
+    requestCourse: function (){
+      page("/course/"+this.courseid);
+    }
+  });
+</script>
+
+</dom-module>
+
+</html>

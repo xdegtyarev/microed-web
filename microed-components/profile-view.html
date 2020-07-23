@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="import" href="../external-components/iron-ajax/iron-ajax.html">
+ <link rel="import" href="../external-components/paper-card/paper-card.html">
+ <link rel="import" href="../external-components/paper-progress/paper-progress.html">
+ <link rel="import" href="swipeable-card.html">
+</head>
+
+<dom-module id="profile-view">
+<template>
+  <style>
+    :host{
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    paper-card {
+      text-align: left;
+      width: 100%;
+      min-height: 300px;
+      max-width: 500px;
+      margin-bottom: 16px;
+
+      --paper-card-header-image:{
+        max-height:150px;
+        object-fit: cover;
+      }
+
+      --paper-card-content:{
+        margin-bottom: 32px;
+      }
+
+      --paper-card-actions:{
+        position:absolute;
+        bottom: 0px;
+        width:100%;
+        padding: 8px 0px;
+      }
+    }
+
+    paper-fab.start-course-button{
+      position: absolute;
+      bottom: -8px;
+      right: 16px;
+    }
+
+        a {
+        text-decoration: none;
+        color: #3498db;
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    a:hover {
+      color: #2980b9;
+    }
+  </style>
+
+
+  <iron-ajax
+  id="ajax-profile-fetcher"
+  handle-as="json"
+  last-response="{{profile}}">
+</iron-ajax>
+<ul align="center">
+  <li>
+    <paper-card image="[[profile.banner]]">
+    <div class="card-content">
+      <h2>[[profile.name]]</h2>
+      <p>[[profile.description]]</p>
+      <span>
+    </div>
+    <div class="card-actions">
+     <span style="padding-left: 16px;"><b>[[profile.courses]]</b> courses</span>
+     <span style="padding-left: 16px;"><b>[[profile.following]]</b> following</span>
+     <span style="padding-left: 16px;"><b>[[profile.followers]]</b> followers</span>
+     <paper-fab class="start-course-button" icon="social:person-add" title="Follow" on-click="followRequest"></paper-fab>
+  </div>
+  </paper-card>
+</li>
+<template id="profile" is="dom-repeat" items="{{profile.courses}}">
+  <li id="card-li">
+    <course-card class="paper-card" courseId="{{item.id}}"></course-card>
+  </li>
+</template>
+</ul>
+</template>
+
+<script>
+  Polymer({
+    is: "profile-view",
+    properties: {
+      profileId: {
+        type: String,
+        value: '',
+        observer: 'fetchProfileData'
+      }
+    },
+
+    fetchProfileData: function()
+    {
+      if(this.profileId != ''){
+        document.getElementById("ajax-profile-fetcher").url = 'http://api.microed.org/v1/accounts/'+this.profileId;
+        document.getElementById("ajax-profile-fetcher").generateRequest();
+      }
+    },
+  });
+</script>
+
+</dom-module>
+
+</html>

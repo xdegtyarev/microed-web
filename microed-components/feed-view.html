@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="import" href="../external-components/iron-ajax/iron-ajax.html">
+ <link rel="import" href="../external-components/paper-card/paper-card.html">
+ <link rel="import" href="../external-components/paper-progress/paper-progress.html">
+ <link rel="import" href="swipeable-card.html">
+</head>
+
+<dom-module id="feed-view">
+<template>
+  <style>
+    :host{
+      margin-left: auto;
+      margin-right: auto
+    }
+  </style>
+
+
+  <iron-ajax
+    id="ajax-feed-fetcher"
+    handle-as="json"
+    last-response="{{feed}}">
+  </iron-ajax>
+
+   <ul align=center>
+      <li><course-card class="paper-card" courseId="562cce84eab21c7704233f71"></course-card></li>
+      <li><subscribe-card class="paper-card"></subscribe-card></li>
+  </ul>
+
+</template>
+
+<script>
+  Polymer({
+    is: "feed-view",
+    properties: {
+      feedId: {
+        type: String,
+        value: '',
+        observer: 'fetchProfileData'
+      }
+    },
+
+    fetchProfileData: function()
+    {
+      if(this.feedId != ''){
+        document.getElementById("ajax-feed-fetcher").url = 'http://api.microed.org/v1/accounts/'+this.feedId;
+        document.getElementById("ajax-feed-fetcher").generateRequest();
+      }
+    },
+  });
+</script>
+
+</dom-module>
+
+</html>

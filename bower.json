@@ -1,0 +1,35 @@
+{
+  "name": "microed",
+  "homepage": "microed.org",
+  "authors": [
+    "Alexander Degtyarev <xdegtyarev@gmail.com>"
+  ],
+  "description": "micro learning",
+  "main": "microed-web-app.js",
+  "moduleType": [],
+  "keywords": [
+    "education"
+  ],
+  "license": "Alexander Degtyarev",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-card": "PolymerElements/paper-card#~1.0.6",
+    "paper-elements": "PolymerElements/paper-elements#~1.0.5",
+    "paper-input": "PolymerElements/paper-input#~1.0.15",
+    "gold-email-input": "PolymerElements/gold-email-input#~1.0.5",
+    "iron-form": "PolymerElements/iron-form#~1.0.10",
+    "paper-toast": "PolymerElements/paper-toast#~1.0.0",
+    "iron-icon": "PolymerElements/iron-icon#~1.0.7",
+    "paper-fab": "PolymerElements/paper-fab#~1.0.6",
+    "paper-scroll-header-panel": "PolymerElements/paper-scroll-header-panel#~1.0.8",
+    "iron-pages": "PolymerElements/iron-pages#~1.0.3"
+  }
+}

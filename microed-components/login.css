@@ -1,0 +1,76 @@
+ #a0-lock.a0-theme-default .a0-panel .a0-inputs,
+  #a0-lock.a0-theme-default .a0-panel .a0-email,
+  #a0-lock.a0-theme-default .a0-panel .a0-username,
+  #a0-lock.a0-theme-default .a0-panel .a0-repeatPassword
+  {
+    border: none;
+  }
+
+
+  #a0-lock.a0-theme-default .a0-panel button.a0-primary
+  {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid #3160B6;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    line-height: 20px;
+    margin: .3em 0 1em 0;
+    padding: 12px 24px;
+    position: relative;
+    text-align: center;
+
+    transition: all 0.15s ease;
+    vertical-align: middle;
+    webkit-font-smoothing: antialiased;
+    width: 100%;
+  }
+#a0-lock.a0-theme-default .a0-panel button.a0-primary:focus
+{
+  outline: 0;
+}
+#a0-lock.a0-theme-default .a0-zocial.a0-guest,
+#a0-lock.a0-theme-default .a0-panel button.a0-primary
+{
+  background: #4a89dc;
+  text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+}
+#a0-lock.a0-theme-default .a0-panel button.a0-primary:hover
+{
+  background: #357bd8;
+}
+
+  #a0-lock.a0-theme-default .a0-panel .a0-email input,
+  #a0-widget .a0-panel .a0-email input,
+  #a0-lock.a0-theme-default .a0-panel .a0-password input,
+  #a0-widget .a0-panel .a0-password input,
+  #a0-lock.a0-theme-default .a0-panel .a0-repeatPassword input,
+  #a0-widget .a0-panel .a0-repeatPassword input
+{
+  background: #FFFFFF;
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-radius: 0;
+  color: #636363;
+  display: block;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  webkit-appearance: none;
+  width: 100%;
+}
+
+#a0-lock.a0-theme-default .a0-panel .a0-password .a0-input-box i,
+#a0-lock.a0-theme-default .a0-panel .a0-repeatPassword .a0-input-box i,
+#a0-lock.a0-theme-default .a0-panel .a0-email .a0-input-box i,
+#a0-lock.a0-theme-default .a0-panel .a0-footer .a0-logo i
+{
+  display: none;
+}
+
+#a0-lock.a0-theme-default .a0-panel * {
+  font-family: 'Roboto', 'Noto', sans-serif  !important;
+}
